@@ -16,9 +16,22 @@
 
 package org.springframework.samples.petclinic;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Scanner;
+
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportRuntimeHints;
+import org.springframework.samples.petclinic.vet.Vet;
+
+import jakarta.transaction.Transactional;
 
 /**
  * PetClinic Spring Boot Application.
@@ -28,10 +41,32 @@ import org.springframework.context.annotation.ImportRuntimeHints;
  */
 @SpringBootApplication
 @ImportRuntimeHints(PetClinicRuntimeHints.class)
-public class PetClinicApplication {
+//1.Crear un objeto Vet sin Speciality
+//2.Persistir el objeto Vet en BBDD
+//3.Consultar por ID y comprobar que se ha creado correctamente
+//4.Editar el elemento recién creado para añadir una Speciality concreta
+//5.Listar todos los veterinarios existentes
+public class PetClinicApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PetClinicApplication.class, args);
 	}
+	
+//	@Bean
+//	public CommandLineRunner demoVetRepository(VetRepository vetRepository, SpecialtyRepository specialtyRepository) 
+//	{   return (args) -> {
+//		
+//		};
+//	
+//	};
 
+	@Override
+	public void run(String... args) throws Exception {
+		// TODO Auto-generated method stub
+		
+		Vet veterinario = new Vet();
+		veterinario.setFirstName("Pedro");
+		veterinario.setLastName("Perros");
+		
+	}
 }
