@@ -29,7 +29,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportRuntimeHints;
+import org.springframework.samples.petclinic.vet.SpecialityRepository;
 import org.springframework.samples.petclinic.vet.Vet;
+import org.springframework.samples.petclinic.vet.VetRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -52,21 +54,27 @@ public class PetClinicApplication implements CommandLineRunner {
 		SpringApplication.run(PetClinicApplication.class, args);
 	}
 	
-//	@Bean
-//	public CommandLineRunner demoVetRepository(VetRepository vetRepository, SpecialtyRepository specialtyRepository) 
-//	{   return (args) -> {
-//		
-//		};
-//	
-//	};
+	@Bean
+	public CommandLineRunner demoVetRepository(VetRepository vetRepository, SpecialityRepository specialtyRepository) 
+	{   return (args) -> {
+		
+		Vet veterinario = new Vet();
+		
+		veterinario.setFirstName("Pedro");
+		veterinario.setLastName("Perros");
+		
+		vetRepository.save(veterinario);
+		System.out.println(vetRepository.findById(veterinario.getId()));
+		
+		};
+	
+	};
 
 	@Override
 	public void run(String... args) throws Exception {
 		// TODO Auto-generated method stub
 		
-		Vet veterinario = new Vet();
-		veterinario.setFirstName("Pedro");
-		veterinario.setLastName("Perros");
+		
 		
 	}
 }
