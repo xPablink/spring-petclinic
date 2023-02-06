@@ -25,6 +25,8 @@ import org.springframework.samples.petclinic.vet.Specialty;
 import org.springframework.samples.petclinic.vet.SpecialtyRepository;
 import org.springframework.samples.petclinic.vet.Vet;
 import org.springframework.samples.petclinic.vet.VetRepository;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
 
 /**
  * PetClinic Spring Boot Application.
@@ -34,12 +36,20 @@ import org.springframework.samples.petclinic.vet.VetRepository;
 
 @Slf4j
 @SpringBootApplication
+@OpenAPIDefinition(info = @Info(title = "ProductStore API", version = "2.0", description = "ProductStore Information"))
 public class PetClinicApplication {
 
 	public static void main(String[] args) {
 		log.info("prueba");
 		SpringApplication.run(PetClinicApplication.class, args);
 	}
+
+	/*
+	 * 1 Crear un objeto Vet sin Speciality 2 Persistir el objeto Vet en BBDD 3 Consultar
+	 * por ID y comprobar que se ha creado correctamente 4 Editar el elemento recién
+	 * creado para añadir una Speciality concreta 5 Listar todos los veterinarios
+	 * existentes
+	 */
 
 	@Bean
 	public CommandLineRunner demoVetRepository(VetRepository vetRepository, SpecialtyRepository specialtyRepository) {
@@ -52,6 +62,7 @@ public class PetClinicApplication {
 			Vet vet = new Vet();
 			vet.setFirstName("Sergio");
 			vet.setLastName("Raposo Vargas");
+			log.info("Tienes id ? " + vet.getId());
 
 			log.info("Persistimos en BBDD");
 			vetRepository.save(vet);
@@ -67,7 +78,7 @@ public class PetClinicApplication {
 
 			log.info("Listamos todos los veterinarios");
 			for (Vet v : vetRepository.findAll()) {
-				log.info("Vet: " + v);
+				log.info("Vet: " + v.getFirstName());
 			}
 		};
 	}
