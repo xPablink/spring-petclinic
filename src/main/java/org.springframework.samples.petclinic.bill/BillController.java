@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.vet;
+package org.springframework.samples.petclinic.bill;
 
 import java.util.List;
 
@@ -40,49 +40,48 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
  * @author Arjen Poutsma
  */
 @Controller
-class VetController {
+class BillController {
 
-	private final VetRepository vetRepository;
+	private final BillRepository billRepository;
 
-	public VetController(VetRepository clinicService) {
-		this.vetRepository = clinicService;
+	public BillController(BillRepository billService) {
+		this.BillRepository = billService;
 	}
 
 	@GetMapping("/vets.html")
 	public String showVetList(@RequestParam(defaultValue = "1") int page, Model model) {
 		// Here we are returning an object of type 'Vets' rather than a collection of Vet
 		// objects so it is simpler for Object-Xml mapping
-		Vets vets = new Vets();
-		Page<Vet> paginated = findPaginated(page);
-		vets.getVetList().addAll(paginated.toList());
+		Bills bills = new Bills();
+		Page<Bill> paginated = findPaginated(page);
+		bills.getVetList().addAll(paginated.toList());
 		return addPaginationModel(page, paginated, model);
 
 	}
 
-	private String addPaginationModel(int page, Page<Vet> paginated, Model model) {
-		List<Vet> listVets = paginated.getContent();
+	private String addPaginationModel(int page, Page<Bill> paginated, Model model) {
+		List<Bill> listVets = paginated.getContent();
 		model.addAttribute("currentPage", page);
 		model.addAttribute("totalPages", paginated.getTotalPages());
 		model.addAttribute("totalItems", paginated.getTotalElements());
-		model.addAttribute("listVets", listVets);
-		return "vets/vetList";
+		model.addAttribute("listBills", listVets);
+		return "bills/billList";
 	}
 
-	private Page<Vet> findPaginated(int page) {
+	private Page<Bill> findPaginated(int page) {
 		int pageSize = 5;
 		Pageable pageable = PageRequest.of(page - 1, pageSize);
-		return vetRepository.findAll(pageable);
+		return billRepository.findAll(pageable);
 	}
 
 	@GetMapping({ "/vets" })
 	@Operation(summary="Lista de veterinarios")
 	@ApiResponses(value = {@ApiResponse(responseCode = "200", description = "Lista de productos", content = {@Content(mediaType = "application/json", schema = @Schema(implementation = Long.class))})})} 
-	public @ResponseBody Vets showResourcesVetList() {
-		// Here we are returning an object of type 'Vets' rather than a collection of Vet
-		// objects so it is simpler for JSon/Object mapping
+	public @ResponseBody Bills showResourcesVetList() {
+	
 
-		Vets vets = new Vets();
-		vets.getVetList().addAll(this.vetRepository.findAll());
+		Bills vets = new Bills();
+		vets.getVetList().addAll(this.billRepository.findAll());
 		return vets;
 	}
 

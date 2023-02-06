@@ -27,6 +27,8 @@ import org.springframework.samples.petclinic.vet.Vet;
 import org.springframework.samples.petclinic.vet.VetRepository;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
+import java.util.logging.LogRecord;
+import java.util.logging.StreamHandler;
 
 /**
  * PetClinic Spring Boot Application.
@@ -40,7 +42,6 @@ import io.swagger.v3.oas.annotations.info.Info;
 public class PetClinicApplication {
 
 	public static void main(String[] args) {
-		log.info("prueba");
 		SpringApplication.run(PetClinicApplication.class, args);
 	}
 
@@ -54,33 +55,33 @@ public class PetClinicApplication {
 	@Bean
 	public CommandLineRunner demoVetRepository(VetRepository vetRepository, SpecialtyRepository specialtyRepository) {
 		return (args) -> {
-			log.info("*****************************************************");
-			log.info("BOOTCAMP - Spring y Spring Data - vetRepository");
-			log.info("*****************************************************");
-
-			log.info("Creamos un objeto Vet");
+//			log.info("*****************************************************");
+//			log.info("BOOTCAMP - Spring y Spring Data - vetRepository");
+//			log.info("*****************************************************");
+//
+//			log.info("Creamos un objeto Vet");
 			Vet vet = new Vet();
 			vet.setFirstName("Sergio");
 			vet.setLastName("Raposo Vargas");
-			log.info("Tienes id ? " + vet.getId());
-
-			log.info("Persistimos en BBDD");
+//			log.info("Tienes id ? " + vet.getId());
+//
+//			log.info("Persistimos en BBDD");
 			vetRepository.save(vet);
-
-			log.info("Comprobamos que se ha creado correctamente");
+//
+//			log.info("Comprobamos que se ha creado correctamente");
 			Vet vetAux = vetRepository.findById(vet.getId());
-			log.info(vetAux.toString());
-			log.info("Editamos el objeto y añadimos una Speciality");
+//			log.info(vetAux.toString());
+//			log.info("Editamos el objeto y añadimos una Speciality");
 			Specialty s = specialtyRepository.findById(1);
 			vet.addSpecialty(s);
 			vetRepository.save(vet);
-			log.info(vet.toString());
-
-			log.info("Listamos todos los veterinarios");
-			for (Vet v : vetRepository.findAll()) {
-				log.info("Vet: " + v.getFirstName());
-			}
+//			log.info(vet.toString());
+//
+//			log.info("Listamos todos los veterinarios");
+//			for (Vet v : vetRepository.findAll()) {
+//				log.info("Vet: " + v.getFirstName());
+			};
 		};
 	}
 
-}
+
